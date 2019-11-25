@@ -2,145 +2,54 @@
 <html>
 <head>
 <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>TylerKingSoundV5</title>
+<title>TylerKingSound</title>
 <link rel="stylesheet" href="https://use.typekit.net/mqp8mjz.css">
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/simplebar@latest/dist/simplebar.css" />
 <script src="https://unpkg.com/simplebar@latest/dist/simplebar.min.js"></script>
-<link rel="stylesheet" href="css/styles.css">
-<script src="js/main.js"></script>
+<link rel="stylesheet" href="static/css/styles.css">
+<script src="static/js/main.js"></script>
 </head>
 
-<body data-simplebar>
-	<div id="header">
-		<div id="header-sm">
-			<a class="menu-icon" href="javascript:void(0);">
-				<div></div>
-				<div></div>
-				<div></div>
-			</a>
-			<div class="logo">
-				<div class="font-king">KING</div>
-				<div class="font-sound">SOUND</div>
-			</div>
-			<div class="header-line"></div>
-		</div>
-		<div id="header-lg">
-			<div id="nav-left">
-				<a href="javascript:void(0);" onclick="bgChangeMain()">
-					<img class="logo-output" src="images/LogoLight.gif" alt="animated logo"/>
-				</a>
-			</div>
-			<div id="nav-right">
-				<a href="#body-main" onclick="bgChangeMain()">HOME</a>
-				<a href="javascript:void(0);" onclick="bgChangeMusic()">MUSIC</a>
-				<a href="javascript:void(0);" onclick="bgChangeSound()">SOUND DESIGN</a>
-				<a href="#sec-about" onclick="bgChangeMain()">ABOUT</a>
-				<a href="#sec-contact" onclick="bgChangeMain()">CONTACT</a>
-			</div>
-			<div class="header-line"></div>
-		</div>
-	</div>
-	
-	<a id="btn-top" href="#header-sm">
-		<img src="images/arrow-icon.png" alt="to top button">
-	</a>
-	
-	<div id="body-demo">
-		<div id="demo-top">
-			<iframe id="d-mas" src="https://www.youtube-nocookie.com/embed/1hWPRDmFcWE?rel=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-			<iframe id="d-sdo" src="https://www.youtube.com/embed/F0mXq9uBrCI" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-			<iframe id="d-mo" src="https://www.youtube.com/embed/8-vdHpvoUJE" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-		</div>
-		<div id="demo-text">
-			<p>Choose one of the options below to hear the demo with just the music or sound design:</p>
-		</div>
-		<div id="demo-mid">
-			<a id="MO" class="link-option" href="javascript:void(0);" onClick="activeLink('MO','d-mo')">MUSIC ONLY</a>
-			<a id="MAS" class="link-option" href="javascript:void(0);" onClick="activeLink('MAS','d-mas')">MUSIC AND SOUND</a>
-			<a id="SDO" class="link-option" href="javascript:void(0);" onClick="activeLink('SDO','d-sdo')">SOUND DESIGN ONLY</a>
-		</div>
-		<div id="demo-bottom">
-			<a style="font-size: 1.5em" href="javascript:void(0);" onclick="bgChangeDemoOff()">CLOSE</a>
-		</div>
-		<div id="demo-bg"></div>
-	</div>
-	
-	<div id="body-start">
-		<div id="sec-title"  class="section">
-			<div id="sec-start-logo">
-				<a href="javascript:void(0);" onclick="bgChangeStart()">
-					<img class="logo-output" src="images/LogoDark.gif" alt="animated logo">
-				</a>
-			</div>
-			<div id="sec-start-logo-sm">
-				<div class="logo-drk">
-					<div class="font-king-drk">KING</div>
-					<div class="font-sound-drk">SOUND</div>
-				</div>
-			</div>
-			<div id="sec-start-mid">
-				<div id="fnt-start-tk">TYLER KING</div>
-				<div id="fnt-start-sdmc">Sound Design | Music Composition</div>
-			</div>
-			<div id="sec-start-enter">
-				<a href="javascript:void(0);" onclick="bgChangeStart()">ENTER</a>
-				<div id="underline"></div>
-			</div>
+<body>
+    <div data-simplebar>
+        <div class="header">
+            <div class="hdr-left"></div>
+            <div class="hdr-right"></div>
+        </div>
+        <div class="content">
+            <div id="pg-main" class="page">
+                <div class="section">
 
-		</div>
-		<div id="bg-logo-light"></div>
-	</div>
-	
-	<div id="body-main">
-		<div id="sec-main" class="section">
-			<div class="mp-buttons">
-				<div class="item"><p>Hey, you managed to find this site before it's finished! Sorry, there's no content here yet. Just testing.</p></div>
-				<a class="btn-link" href="javascript:void(0);" onclick="bgChangeMusic()">MUSIC</a>
-				<a class="btn-link" href="javascript:void(0);" onclick="bgChangeSound()">SOUND DESIGN</a>
-				<a id="btn-demo" href="javascript:void(0);" onClick="bgChangeDemoOn()"></a>
-			</div>
-		</div>
-		<div id="sec-about" class="section">
-			<div class="font-section">ABOUT</div>
-			<div class="header-line"></div>
-		</div>
-		<div id="sec-contact" class="section">
-			<div class="font-section">CONTACT</div>
-			<div class="header-line"></div>
-		</div>
-	</div>
-	
-	<div id="body-music">
-		<div class="section">
-			<div class="mp-buttons">
-				<a class="btn-link" href="javascript:void(0);" onclick="bgChangeMusic()">MUSIC</a>
-				<a class="btn-link" href="javascript:void(0);" onclick="bgChangeSound()">SOUND DESIGN</a>
-			</div>
-			<div class="mp-acpoint">
-				<div>ABOUT AND CONTACT</div>
-				<div class="arrow-down"></div>
-			</div>
-		</div>
-		<div class="section"></div>
-	</div>
-	
-	<div id="body-sound">
-		<div class="section">
-			<div class="mp-buttons">
-				<a class="btn-link" href="javascript:void(0);" onclick="bgChangeMusic()">MUSIC</a>
-				<a class="btn-link" href="javascript:void(0);" onclick="bgChangeSound()">SOUND DESIGN</a>
-			</div>
-			<div class="mp-acpoint">
-				<div>ABOUT AND CONTACT</div>
-				<div class="arrow-down"></div>
-			</div>
-		</div>
-		<div class="section"></div>
-	</div>
-	
+                </div>
+            </div>
+            <div id="pg-demo" class="page">
+                <div class="section">
 
-	<div id="bg-logo-sm"></div>
-	<div id="bg-color"></div>
+                </div>
+            </div>
+            <div id="pg-sound" class="page">
+                <div class="section">
+
+                </div>
+            </div>
+            <div id="pg-music" class="page">
+                <div class="section">
+
+                </div>
+            </div>
+        </div>
+        <div class="background">
+	        <div class="bg-text">
+                <div class="top">
+                    <div id="bg-top-text">KING</div>
+                </div>
+                <div class="bottom">
+                    <div id="bg-bottom-text">SOUND</div>
+                </div>
+            </div>
+	        <div class="bg-color"></div>
+        </div>
+    </div>
 </body>
 </html>

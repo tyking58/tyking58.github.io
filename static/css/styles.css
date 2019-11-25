@@ -1,0 +1,263 @@
+﻿@charset "utf-8";
+/* CSS Document */
+
+html {
+    margin: 0;
+    padding: 0;
+    font-family: Expressway;
+    line-height: 1.15;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+a {
+    text-decoration: none;
+}
+
+article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
+    display: block;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Expressway, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 1rem;
+    font-weight: 200;
+    line-height: 1.5;
+    letter-spacing: 1px;
+    color: #212529;
+    text-align: left;
+    background-color: #fff;
+}
+
+/* Testing Classes */
+.border {
+    border: solid red 1px;
+}
+
+/* Text Colors */
+
+.text-light {
+    color: white;
+}
+
+.text-dark {
+    color: #555555;
+}
+
+/* Paragraph and Font Formatting */
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+h1, .h1 {
+    font-size: 2.5rem;
+}
+
+h2, .h2 {
+    font-size: 2rem;
+}
+
+h3, .h3 {
+    font-size: 1.75rem;
+}
+
+h4, .h4 {
+    font-size: 1.5rem;
+}
+
+h5, .h5 {
+    font-size: 1.25rem;
+}
+
+h6, .h6 {
+    font-size: 1rem;
+}
+
+/*---Header---*/
+
+
+/*---Content---*/
+
+
+/*---Background---*/
+
+.background {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    z-index: 0;
+}
+
+.bg-text {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    display: flex;
+    align-items: flex-end;
+    height: 100vh;
+    width: 100vw;
+}
+
+.bg-text > div {
+    position: absolute;
+    transform: rotate(-90deg);
+    color: #EEEEEE;
+}
+
+.bg-text div {
+    line-height: 50vw;
+    font-size: 70vw;
+    width: 100vh;
+}
+
+.bg-text .top {
+    bottom: -40px;
+    left: -25px;
+    width: 100vw;
+    height: 100vw;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+}
+
+.bg-text .bottom {
+    display: flex;
+    align-items: flex-end;
+    width: 100vw;
+    height: 100vw;
+    font-weight: 100;
+    letter-spacing: -10px;
+    bottom: 25px;
+}
+
+.bg-color {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    height: 100vh;
+    width: 100vw;
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    
+    .bg-text div {
+        line-height: 50vw;
+        font-size: 50vw;
+        width: 100vh;
+    }
+    
+    .bg-text .top {
+        bottom: -50px;
+        left: 0px;
+    }
+
+    .bg-text .bottom {
+        left: -25px;
+        bottom: 25px;
+    }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    
+    .bg-text div {
+        font-size: 45vw;
+    }
+
+    .bg-text .top {
+        left: 25px;
+    }
+
+    .bg-text .bottom {
+        bottom: 25px;
+    }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    .bg-text {
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: flex-end;
+    }
+
+    .bg-text > div {
+        transform: rotate(0);
+        position: relative;
+    }
+    
+    .bg-text div {
+        line-height: 1em;
+        height: 33vw;
+        font-size: 33vw;
+        width: 100vw;
+        text-align: center;
+    }
+
+    .bg-text .top {
+        width: 100vw;
+        height: 33vw;
+        bottom: -140px;
+        left: -50px;
+    }
+
+    .bg-text .bottom {
+        width: 100vw;
+        height: 33vw;
+        left: 20px;
+        bottom: -60px;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+
+    .bg-text div {
+        height: 30vw;
+        font-size: 30vw;
+    }
+
+    .bg-text .top {
+        height: 30vw;
+        bottom: -175px;
+        font-size: 30vw;
+        left: -75px;
+    }
+
+    .bg-text .bottom {
+        height: 30vw;
+        left: 100px;
+        bottom: -80px;
+    }
+}
+
+/* Extra Extra large devices (large laptops and desktops, 2000px and up) */
+@media only screen and (min-width: 2000px) {
+
+    .bg-text .top {
+        bottom: -275px;
+        left: -150px;
+    }
+
+    .bg-text .bottom {
+        left: 125px;
+        bottom: -125px;
+    }
+}
