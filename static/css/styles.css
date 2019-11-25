@@ -90,9 +90,129 @@ h6, .h6 {
 
 /*---Header---*/
 
+.header {
+    position: fixed;
+    z-index: 10;
+    display: flex;
+    width: 100vw;
+    height: 50px;
+    top: 0;
+    right: 0;
+}
+
+.hdr-left {
+    height: 100%;
+    width: calc(100% - 50px);
+}
+
+.hdr-right {
+    height: 100%;
+    width: 50px;
+}
+
+.hdr-btn {
+    width: calc(100% - 30px);
+    height: calc(100% - 30px);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.hdr-btn div {
+    width: 100%;
+    border-bottom: solid 2px black;
+}
 
 /*---Content---*/
 
+.content {
+    position: relative;
+    z-index: 5;
+    height: calc(100vh - 50px);
+    width: 100vw;
+    margin-top: 50px;
+}
+
+.page {
+    height: calc(100vh - 50px);
+    width: 100vw;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+    /*--Main Page--*/
+
+#pg-main .sec01 {
+    justify-content: center;
+    height: 40%;
+}
+
+    #pg-main .sec01 img {
+        width: 100%;
+    }
+
+#pg-main .sec02 {
+    width: 100%;
+    height: 50%;
+}
+
+    #pg-main .sec02 .cntnt-btns {
+        padding: 0px 50px;
+        width: calc(100% - 100px);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+    
+    #pg-main .sec02 .cntnt-btn {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        font-size: 1.9em;
+        font-weight: 300;
+    }
+    
+    #pg-main .sec02 .btn-line {
+        position: relative;
+        width: 70%;
+        border-top: solid blue 2px;
+    }
+    
+    #pg-main .sec02 .right {
+        align-items: flex-end;
+    }
+    
+    #pg-main .sec02 .right .btn-line {
+        right: 25px;
+    }
+    
+    #pg-main .sec02 .left .btn-line {
+        left: 25px;
+    }
+
+    #pg-main .sec02 .top .btn-line {
+        border-color: #8000FF;
+    }
+    
+    #pg-main .sec02 .mid {
+        border-color: #8000FF;
+    }
+    
+    #pg-main .sec02 .btm {
+        border-color: #8000FF;
+    }
+
+
+
+#pg-main .sec03 {
+    height: 10%;
+}
 
 /*---Background---*/
 
@@ -156,7 +276,9 @@ h6, .h6 {
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
-    
+
+    /*---Background---*/
+
     .bg-text div {
         line-height: 50vw;
         font-size: 50vw;
@@ -176,7 +298,9 @@ h6, .h6 {
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
-    
+
+    /*---Background---*/
+
     .bg-text div {
         font-size: 45vw;
     }
@@ -192,6 +316,9 @@ h6, .h6 {
 
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
+
+    /*---Background---*/
+
     .bg-text {
         flex-direction: column;
         justify-content: flex-end;
@@ -229,6 +356,8 @@ h6, .h6 {
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
 
+    /*---Background---*/
+
     .bg-text div {
         height: 30vw;
         font-size: 30vw;
@@ -250,6 +379,8 @@ h6, .h6 {
 
 /* Extra Extra large devices (large laptops and desktops, 2000px and up) */
 @media only screen and (min-width: 2000px) {
+
+    /*---Background---*/
 
     .bg-text .top {
         bottom: -275px;
