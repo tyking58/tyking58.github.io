@@ -2,161 +2,149 @@
 
 /* global $, document */
 
-function activeLink(temp,demo) {
-	var moLink = document.getElementById("MO"),
-		masLink = document.getElementById("MAS"),
-		sdoLink = document.getElementById("SDO"),
-		currentLink = document.getElementById(temp),
-		demoMO = document.getElementById("d-mo"),
-		demoMAS = document.getElementById("d-mas"),
-		demoSDO = document.getElementById("d-sdo"),
-	    currentDemo = document.getElementById(demo);
-	
-	moLink.className = "link-option";
-	masLink.className = "link-option";
-	sdoLink.className = "link-option";
-	currentLink.className += " " + "active-link";
-	
-	demoMO.style.display = "none";
-	demoMAS.style.display = "none";
-	demoSDO.style.display = "none";
-	currentDemo.style.display = "block";
-}
+$(document).ready(function () {
+    
+    $('.cntnt-btn').hover(
+        function () {
+            var button = $(this).attr('id');
 
-function bgChangeStart() {
-	var startSec = document.getElementById("body-start"),
-		mainSec = document.getElementById("body-main");
-	
-	mainSec.style.display = "block";
-	startSec.style.opacity = "0";
-	setTimeout(function(){startSec.style.display = "none";},1000);
-	
-}
+            if (button == 'btn-main-demo') {
+                $(this).children('.btn-text').css('left', '25px');
+                $(this).children('.btn-line').css('left', '0');
+                $('.bg-main-demo').css('opacity', '1');
+            }
+            else if (button == 'btn-main-music') {
+                $(this).children('.btn-text').css('right', '25px');
+                $(this).children('.btn-line').css('right', '0');
+                $('.bg-main-music').css('opacity', '1');
+            }
+            else {
+                $(this).children('.btn-text').css('left', '25px');
+                $(this).children('.btn-line').css('left', '0');
+                $('.bg-main-sound').css('opacity', '1');
+            }
+        },
 
-function bgChangeMusic() {
-	var bgColor = document.getElementById("bg-color"),
-		musicSec = document.getElementById("body-music"),
-		mainSec = document.getElementById("body-main"),
-		soundSec = document.getElementById("body-sound"),
-		head = document.getElementById("header");
-	
-	bgColor.style.backgroundPosition = "bottom left";
+        function () {
+            var button = $(this).attr('id');
 
-	mainSec.style.zIndex = "0";
-	mainSec.style.opacity = "0";
-	mainSec.style.display = "none";
-	soundSec.style.zIndex = "0";
-	soundSec.style.opacity = "0";
-	mainSec.style.display = "none";
-	musicSec.style.display = "block";
-	musicSec.style.zIndex = "1";
-	musicSec.style.opacity = "1";
-}
+            if (button == 'btn-main-music') {
+                $(this).children('.btn-text').css('right', '0');
+                $(this).children('.btn-line').css('right', '25px');
+            }
 
-function bgChangeMain() {
-	var bgColor = document.getElementById("bg-color"),
-		musicSec = document.getElementById("body-music"),
-		mainSec = document.getElementById("body-main"),
-		soundSec = document.getElementById("body-sound"),
-		head = document.getElementById("header");
-	
-	bgColor.style.backgroundPosition = "bottom";
+            else {
+                $(this).children('.btn-text').css('left', '0');
+                $(this).children('.btn-line').css('left', '25px');
+            }
+            $('.bg-main-demo').css('opacity', '0');
+            $('.bg-main-sound').css('opacity', '0');
+            $('.bg-main-music').css('opacity', '0');
+        }
 
-	musicSec.style.zIndex = "0";
-	musicSec.style.opacity = "0";
-	musicSec.style.display = "none";
-	soundSec.style.zIndex = "0";
-	soundSec.style.opacity = "0";
-	soundSec.style.display = "none";
-	mainSec.style.display = "block";
-	mainSec.style.zIndex = "1";
-	mainSec.style.opacity = "1";
-}
+    );
 
-function bgChangeSound() {
-	var bgColor = document.getElementById("bg-color"),
-		musicSec = document.getElementById("body-music"),
-		mainSec = document.getElementById("body-main"),
-		soundSec = document.getElementById("body-sound");
-	
-	bgColor.style.backgroundPosition = "bottom right";
-	
-	musicSec.style.zIndex = "0";
-	musicSec.style.opacity = "0";
-	musicSec.style.display = "none";
-	mainSec.style.zIndex = "0";
-	mainSec.style.opacity = "0";
-	mainSec.style.display = "none";
-	soundSec.style.display = "block";
-	soundSec.style.zIndex = "1";
-	soundSec.style.opacity = "1";
-}	
+    $('.hdr-btn').click(
+        function () {
+            $('.header').css('display', 'none');
+            $('.page').css('display', 'none');
+            $('#pg-menu').css('display', 'flex');
+        }
+    );
 
-function bgChangeDemoOn() {
-	var bgColor = document.getElementById("bg-color"),
-		musicSec = document.getElementById("body-music"),
-		mainSec = document.getElementById("body-main"),
-		soundSec = document.getElementById("body-sound"),
-		demoSec = document.getElementById("body-demo"),
-		head = document.getElementById("header");
-	
-	bgColor.style.backgroundPosition = "bottom";
+    $('.exit-btn').click(
+        function () {
+            $('')
+        }
+    )
+    
+    /*
+    $('.cntnt-btn').hover(
+        function () {
+            var button = $(this).attr('id');
 
-	demoSec.style.zIndex = "200";
-	demoSec.style.opacity = "1";
-	musicSec.style.zIndex = "0";
-	musicSec.style.opacity = "0";
-	mainSec.style.zIndex = "0";
-	mainSec.style.opacity = "0";	
-	soundSec.style.zIndex = "0";
-	soundSec.style.opacity = "0";
-	head.style.opacity = "0";
-}
+            if (button == 'btn-main-demo') {
+                $(this).children('.btn-text').css('left', '25px');
+                $(this).children('.btn-line').css('left', '0');
+                $('.bg-main-demo').css('opacity', '1');
+                $('.bg-text .top').css({ 'transition': '0s', 'bottom': '-125vh' });
+                $('.bg-text .btm').css({ 'transition': '0s', 'bottom': '125vh' });
+                $('#bg-top-text').text('DEMO');
+                $('#bg-btm-text').text('REEL');
+                setTimeout(function () {
+                    $('.bg-text .top').css({ 'transition': '0.5s', 'bottom': '-40px' });
+                    $('.bg-text .btm').css({ 'transition': '0.5s', 'bottom': '25px' });
+                }, 10);
+            }
+            else if (button == 'btn-main-music') {
+                console.log('btn-main-music');
+                $(this).children('.btn-text').css('right', '25px');
+                $(this).children('.btn-line').css('right', '0');
+                $('.bg-main-music').css('opacity', '1');
+                $('.bg-text .top').css({ 'transition': '0s', 'bottom': '-125vh' });
+                $('.bg-text .btm').css({ 'transition': '0s', 'bottom': '125vh' });
+                $('#bg-top-text').text('MUSIC');
+                $('#bg-btm-text').text('COMP');
+                setTimeout(function () {
+                    $('.bg-text .top').css({ 'transition': '0.5s', 'bottom': '-40px' });
+                    $('.bg-text .btm').css({ 'transition': '0.5s', 'bottom': '25px' });
+                }, 10);
+            }
+            else {
+                $(this).children('.btn-text').css('left', '25px');
+                $(this).children('.btn-line').css('left', '0');
+                $('.bg-main-sound').css('opacity', '1');
+                $('.bg-text .top').css({ 'transition': '0s', 'bottom': '-125vh' });
+                $('.bg-text .btm').css({ 'transition': '0s', 'bottom': '125vh' });
+                $('#bg-top-text').text('SOUND');
+                $('#bg-btm-text').text('DESIGN');
+                setTimeout(function () {
+                    $('.bg-text .top').css({ 'transition': '0.5s', 'bottom': '-40px' });
+                    $('.bg-text .btm').css({ 'transition': '0.5s', 'bottom': '25px' });
+                }, 10);
+            }
+        },
 
-function bgChangeDemoOff() {
-	var bgColor = document.getElementById("bg-color"),
-		musicSec = document.getElementById("body-music"),
-		mainSec = document.getElementById("body-main"),
-		soundSec = document.getElementById("body-sound"),
-		head = document.getElementById("header"),
-		demoSec = document.getElementById("body-demo");
-	
-	bgColor.style.backgroundPosition = "bottom";
+        function () {
+            var button = $(this).attr('id');
 
-	demoSec.style.zIndex = "-1";
-	demoSec.style.opacity = "0";
-	musicSec.style.zIndex = "0";
-	musicSec.style.opacity = "0";
-	mainSec.style.zIndex = "1";
-	mainSec.style.opacity = "1";	
-	soundSec.style.zIndex = "0";
-	soundSec.style.opacity = "0";
-	head.style.opacity = "1";
-}
+            if (button == 'btn-main-music') {
+                $(this).children('.btn-text').css('right', '0');
+                $(this).children('.btn-line').css('right', '25px');
+            }
 
-$(document).scroll(function() {
-	if($(this).scrollTop() >= 20){
-		$('#btn-top').fadeIn(200);
-	}
-	else {
-		$('#btn-top').fadeOut(200);
-	}
+            else {
+                $(this).children('.btn-text').css('left', '0');
+                $(this).children('.btn-line').css('left', '25px');
+            }
+            $('.bg-main-demo').css('opacity', '0');
+            $('.bg-main-sound').css('opacity', '0');
+            $('.bg-main-music').css('opacity', '0');
+            $('.bg-text .top').css({ 'transition': '0s', 'bottom': '-125vh' });
+            $('.bg-text .btm').css({ 'transition': '0s', 'bottom': '125vh' });
+            $('#bg-top-text').text('KING');
+            $('#bg-btm-text').text('SOUND');
+            setTimeout(function () {
+                $('.bg-text .top').css({ 'transition': '0.5s', 'bottom': '-40px' });
+                $('.bg-text .btm').css({ 'transition': '0.5s', 'bottom': '25px' });
+            }, 10);
+        }
+
+    );
+    */
 });
 
-$(document).ready(function(){
-  $("a").on('click', function(event) {
-    if (this.hash !== "") {
-		event.preventDefault();
+function changePage(value) {
 
-		var hash = this.hash;
-		var parent = "#" + $(hash).parent().attr('id');
+    var button = value;
 
-		$("html, body").animate({
-			scrollTop: $(parent).scrollTop() + $(hash).offset().top}, 800);
-	}
-   });
-});
+    if (button == "EXIT") {
+        $('#pg-menu').css('display', 'none');
+        $('#pg-main').css('display', 'block');
+        $('.hdr-btn').css('display', 'flex');
+    }
 
-$(function(){
-	$("#btn-demo").load("DemoReel.html");
-});
+    else if (button == "") {
+
+    }
+}

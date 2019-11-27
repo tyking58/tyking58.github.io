@@ -11,8 +11,17 @@
 <body>
     <div>
         <div class="header">
-            <div class="hdr-left"></div>
+            <div class="hdr-left">
+                <img src="static/images/LogoDarkSmall.gif" alt="Logo" />
+            </div>
             <div class="hdr-right">
+                <div class="hdr-pages">
+                    <div class="page-btn">HOME</div>
+                    <div class="page-btn">MUSIC</div>
+                    <div class="page-btn">SOUND DESIGN</div>
+                    <div class="page-btn">ABOUT</div>
+                    <div class="page-btn">CONTACT</div>
+                </div>
                 <div class="hdr-btn">
                     <div></div>
                     <div></div>
@@ -23,26 +32,46 @@
         <div class="content" data-simplebar>
             <div id="pg-main" class="page">
                 <div class="section sec01">
-                    <img src="static/images/LogoDark.gif" alt="Logo" />
+                    <img src="static/images/LogoDarkSmall.gif" alt="Logo" />
                 </div>
                 <div class="section sec02">
                     <div class="cntnt-btns">
                         <div id="btn-main-demo" class="cntnt-btn left top">
-                            <div class="btn-text">Demo Reel</div>
+                            <div class="btn-text text-dark">Demo Reel</div>
                             <div class="btn-line"></div>
                         </div>
                         <div id="btn-main-music" class="cntnt-btn right mid">
-                            <div class="btn-text">Composition</div>
+                            <div class="btn-text text-dark">Composition</div>
                             <div class="btn-line"></div>
                         </div>
-                        <div id="btn-main-sound" class="cntnt-btn left bottom">
-                            <div class="btn-text">Sound Design</div>
+                        <div id="btn-main-sound" class="cntnt-btn left btm">
+                            <div class="btn-text text-dark">Sound Design</div>
                             <div class="btn-line"></div>
                         </div>
                     </div>
                 </div>
                 <div class="section sec03">
-
+                    <div class="text-dark">TYLER KING</div>
+                </div>
+                <div class="section sec04">
+                    <div class="about-cntct">
+                        <div class="top text-dark">About and Contact</div>
+                        <div class="arrow"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="pg-menu">
+                <div class="section">
+                    <div class="menu-btns">
+                        <div class="menu-btn text-dark">HOME</div>
+                        <div class="menu-btn text-dark">MUSIC</div>
+                        <div class="menu-btn text-dark">SOUND DESIGN</div>
+                        <div class="menu-btn text-dark">ABOUT</div>
+                        <div class="menu-btn text-dark">CONTACT</div>
+                    </div>
+                    <div class="menu-exit text-dark">
+                        <div class="exit-btn" onclick="changePage('EXIT')">EXIT</div>
+                    </div>
                 </div>
             </div>
             <div id="pg-demo" class="page">
@@ -66,11 +95,15 @@
                 <div class="top">
                     <div id="bg-top-text">KING</div>
                 </div>
-                <div class="bottom">
-                    <div id="bg-bottom-text">SOUND</div>
+                <div class="btm">
+                    <div id="bg-btm-text">SOUND</div>
                 </div>
             </div>
-            <div class="bg-color"></div>
+            <div class="bg-color">
+                <div class="bg-main bg-main-demo"></div>
+                <div class="bg-main bg-main-music"></div>
+                <div class="bg-main bg-main-sound"></div>
+            </div>
         </div>
     </div>
 </body>
