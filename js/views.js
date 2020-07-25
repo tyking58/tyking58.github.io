@@ -111,7 +111,7 @@ APP.menu = {
 			APP.sounds["click"].play();
 			var link = $(this).attr("data-link");
 			console.log("menu-item clicked : " + link);
-			if(link=="reel"){
+			if(link=="demo-reel"){
 				APP.go("home", true);
 				APP.showReel();
 			} else {
@@ -322,7 +322,7 @@ APP.music = {
 }
 
 
-
+/*
 APP.demoReel = {
 	_this: this,
 	init: function () {
@@ -376,7 +376,7 @@ APP.demoReel = {
 
 	}
 }
-
+*/
 
 
 APP.about = { 

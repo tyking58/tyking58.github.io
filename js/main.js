@@ -58,7 +58,7 @@ APP.init = function(){
 	APP.soundDesign.init();
 	APP.music.init();
 	APP.about.init();
-	APP.demoReel.init();
+	//APP.demoReel.init();
 	APP.contact.init();
 	APP.soundDesignDetail.init();
 	APP.musicDetail.init();
@@ -325,7 +325,7 @@ APP.showReel = function(){
 	APP.muteAll(true);
 
 	$.each(APP.videoPlayers,function(i,p){
-		if( p.showreel ){ p.play(); } else { p.pause(); }
+		//if( p.showreel ){ p.play(); } else { p.pause(); }
 	});
 	_this.canvas.removeEventListener('mousedown', APP.webGL.onMouseDownLanding, false);
 
@@ -475,7 +475,7 @@ APP.go = function(state, storeHistory){
 			}
 			break;
 
-
+		/*
 		case "demo-reel":
 			if(fromPage){
 				APP.demoReelDetail.hide();
@@ -483,6 +483,7 @@ APP.go = function(state, storeHistory){
 				APP.demoReel.hide();
 			}
 			break;
+		*/
 
 		case "about":
 			if(fromPage){

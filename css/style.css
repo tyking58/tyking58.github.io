@@ -1539,27 +1539,26 @@ margin-bottom:5px;
 
 
 /* reel video */
-#reel { position: fixed; width: 100vw; height: 100vh; z-index: 0; opacity:1; transition: 1s ease-in-out all;  left:0; top:0;}
+#reel { position: fixed; width: 100%; height: 100%; z-index: 0; background-color: black; opacity:0; transition: 1s ease-in-out all;  left:0; top:0;}
 #reel.show { opacity: 1; z-index: 3000; }
 #reel .close-button { position: absolute; top:5vh; right:5vw; cursor: pointer;  transition: all 1000ms  cubic-bezier(0.86, 0, 0.07, 1);  }
 
 #reel .reel-video{
     overflow:hidden;
-    padding-bottom:60%;
+    padding-bottom:40%;
     position: relative;
     top:50%;
     left:50%;
     transform: translate(-50%,-50%);
     height:0;
 }
-    #reel .reel-video iframe {
-        left: 50%;
-        bottom: 0;
-        height: 50vh;
-        width: 50vw;
-        position: absolute;
-        transform: translate(-50%,-30%);
-    }
+#reel .reel-video iframe{
+    left:0;
+    top:0;
+    height:100%;
+    width:100%;
+    position:absolute;
+}
 
 
 
@@ -1673,49 +1672,15 @@ margin-bottom:5px;
 
 @media only screen and (max-width: 801px) {
 
-  /* reel video */
-  #reel {
-      position: fixed;
-      width: 100vw;
-      height: 100vh;
-      z-index: 0;
-      opacity: 1;
-      transition: 1s ease-in-out all;
-      left: 0;
-      top: 0;
+  #reel .reel-video {
+      overflow: hidden;
+      padding-bottom: 50%;
+      position: relative;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      height: 0;
   }
-
-      #reel.show {
-          opacity: 1;
-          z-index: 3000;
-      }
-
-      #reel .close-button {
-          position: absolute;
-          top: 5vh;
-          right: 5vw;
-          cursor: pointer;
-          transition: all 1000ms cubic-bezier(0.86, 0, 0.07, 1);
-      }
-
-      #reel .reel-video {
-          overflow: hidden;
-          padding-bottom: 100%;
-          position: relative;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%,-50%);
-          height: 0;
-      }
-
-          #reel .reel-video iframe {
-              left: 50%;
-              bottom: 0;
-              height: 30vh;
-              width: 90vw;
-              position: absolute;
-              transform: translate(-50%,-30%);
-          }
 
   .header-menu { display: none; }
 
