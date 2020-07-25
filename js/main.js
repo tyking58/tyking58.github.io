@@ -1,162 +1,667 @@
-// JavaScript Document
+APP={}
+APP.init = function(){
 
-/* global $, document */
+	_this=this;
+	this.state = "loading";
+	this.loader.show();
+	console.log(this.data.title, "v" + this.data.version + " " + this.data.langauge);
 
-function activeLink(temp,demo) {
-	var moLink = document.getElementById("MO"),
-		masLink = document.getElementById("MAS"),
-		sdoLink = document.getElementById("SDO"),
-		currentLink = document.getElementById(temp),
-		demoMO = document.getElementById("d-mo"),
-		demoMAS = document.getElementById("d-mas"),
-		demoSDO = document.getElementById("d-sdo"),
-	    currentDemo = document.getElementById(demo);
-	
-	moLink.className = "link-option";
-	masLink.className = "link-option";
-	sdoLink.className = "link-option";
-	currentLink.className += " " + "active-link";
-	
-	demoMO.style.display = "none";
-	demoMAS.style.display = "none";
-	demoSDO.style.display = "none";
-	currentDemo.style.display = "block";
-}
+	// get incoming query params
+    this.queryParams = $.getQueryParameters();
 
-function bgChangeStart() {
-	var startSec = document.getElementById("body-start"),
-		mainSec = document.getElementById("body-main");
-	
-	mainSec.style.display = "block";
-	startSec.style.opacity = "0";
-	setTimeout(function(){startSec.style.display = "none";},1000);
-	
-}
+    if (this.queryParams.page) { this.page = this.queryParams.page; }
 
-function bgChangeMusic() {
-	var bgColor = document.getElementById("bg-color"),
-		musicSec = document.getElementById("body-music"),
-		mainSec = document.getElementById("body-main"),
-		soundSec = document.getElementById("body-sound"),
-		head = document.getElementById("header");
-	
-	bgColor.style.backgroundPosition = "bottom left";
+	// get device specs and capabilities
+	getSpecs(this);
 
-	mainSec.style.zIndex = "0";
-	mainSec.style.opacity = "0";
-	mainSec.style.display = "none";
-	soundSec.style.zIndex = "0";
-	soundSec.style.opacity = "0";
-	mainSec.style.display = "none";
-	musicSec.style.display = "block";
-	musicSec.style.zIndex = "1";
-	musicSec.style.opacity = "1";
-}
+	AOS.init({
+      offset: 60,
+      duration:1000,
+    });
+	//window.addEventListener('load', 9);
 
-function bgChangeMain() {
-	var bgColor = document.getElementById("bg-color"),
-		musicSec = document.getElementById("body-music"),
-		mainSec = document.getElementById("body-main"),
-		soundSec = document.getElementById("body-sound"),
-		head = document.getElementById("header");
-	
-	bgColor.style.backgroundPosition = "bottom";
+	// show upgrade if case not supported
+	if( ( this.browser.name=="Chrome" && this.browser.version<20 ) || ( this.browser.name=="IE" && this.browser.version<11 ) ||  ( this.browser.name=="MSIE" && this.browser.version<11 ) ){
+		// show upgrade msg if required
+	}
 
-	musicSec.style.zIndex = "0";
-	musicSec.style.opacity = "0";
-	musicSec.style.display = "none";
-	soundSec.style.zIndex = "0";
-	soundSec.style.opacity = "0";
-	soundSec.style.display = "none";
-	mainSec.style.display = "block";
-	mainSec.style.zIndex = "1";
-	mainSec.style.opacity = "1";
-}
+	if(this.isMobile){
+		$("body").addClass("mobile");
 
-function bgChangeSound() {
-	var bgColor = document.getElementById("bg-color"),
-		musicSec = document.getElementById("body-music"),
-		mainSec = document.getElementById("body-main"),
-		soundSec = document.getElementById("body-sound");
+	}
 	
-	bgColor.style.backgroundPosition = "bottom right";
+    // section and page is pushed to page
+	if(window.section) { state = window.section; }
+	if(window.page) { state+= "/" + window.page;}
+	if(!window.section) { state = "home"; }
+
+
+	// check if all preloaded and ready to go
+	this.checkPreloadComplete = function(){
+		console.log("CHECKING IF READY");
+		if(!APP.modelsLoaded) { return null;}
+		APP.loader.hide();
+		APP.header.show();
+		APP.go(state,false);
+		
+		
+	}
+
 	
-	musicSec.style.zIndex = "0";
-	musicSec.style.opacity = "0";
-	musicSec.style.display = "none";
-	mainSec.style.zIndex = "0";
-	mainSec.style.opacity = "0";
-	mainSec.style.display = "none";
-	soundSec.style.display = "block";
-	soundSec.style.zIndex = "1";
-	soundSec.style.opacity = "1";
+
+	// init the views 
+	APP.webGL.init();
+	APP.header.init();
+	APP.footer.init();
+	APP.menu.init();
+	APP.home.init();
+	APP.soundDesign.init();
+	APP.music.init();
+	APP.about.init();
+	APP.demoReel.init();
+	APP.contact.init();
+	APP.soundDesignDetail.init();
+	APP.musicDetail.init();
+	APP.demoReelDetail.init();
+	APP.aboutDetail.init();
+
+	APP.videos.init();
+
+	VanillaTilt.init(document.querySelectorAll(".tilt"), {
+		reverse:true,
+		max:5,
+		scale:1.03,
+		glare:true,
+		"max-glare":.1
+	});
+
+	// hide all before start
+	$(".page").addClass("hide");
+
+	APP.sounds=[];
+	// set up the site default sounds
+	$.each(APP.data.sounds,function(i, s){
+		var sound = new Howl({
+		  src: s.file,
+		  loop: s.loop,
+		  volume: s.volume,
+		  html5: s.html5,
+		  onend: function(o) {
+		    //console.log('Finished!',o);
+		  },
+		  name: s.name
+		});
+		APP.sounds[s.name] = sound;
+		APP.sounds[s.name].volume(s.volume);
+		APP.sounds[s.name].maxVolume=s.volume;
+	});
+
+
+	// global mute control
+	APP.muteAll = function(ignoreGlobalSoundState){
+		console.log("mute all ");
+		$(".footer-sound .sbar").addClass("noAnim");
+		clearInterval(window.muteInterval);
+		var v = Howler.volume();
+		window.muteInterval=setInterval(function(){
+			v-=.1;
+			Howler.volume(v);
+			if(v<=0.0){ Howler.volume(0.0); clearInterval(window.muteInterval);}
+			//console.log("ticking");
+		},50);
+
+		//_this.analyser.minDecibels = -100;
+		
+		// flag will 
+		if( !ignoreGlobalSoundState ) { APP.soundOn = false; }
+	}
+
+	// global unmute control
+	APP.unMuteAll = function(ignoreGlobalSoundState){
+		console.log("unMute all ");
+		$(".footer-sound .sbar").removeClass("noAnim");
+		clearInterval(window.muteInterval);
+		var v = Howler.volume();
+		window.muteInterval=setInterval(function(){
+			v+=.1;
+			Howler.volume(v);
+			if(v>=1){ Howler.volume(1); clearInterval(window.muteInterval);}
+			//console.log("ticking");
+		},50);
+
+		//_this.analyser.minDecibels = -60;
+
+		// flag will 
+		if( !ignoreGlobalSoundState ) { APP.soundOn = true; }
+
+	}
+
+	
+	APP.sounds["ambient"].play();
+	APP.soundOn=true;
+
+
+		// legacy show hide as needed
+	var hidden, visibilityChange;
+	if (typeof document.hidden !== "undefined") {
+	    hidden = "hidden";
+	    visibilityChange = "visibilitychange";
+	} else if (typeof document.mozHidden !== "undefined") {
+	    hidden = "mozHidden";
+	    visibilityChange = "mozvisibilitychange";
+	} else if (typeof document.msHidden !== "undefined") {
+	    hidden = "msHidden";
+	    visibilityChange = "msvisibilitychange";
+	} else if (typeof document.webkitHidden !== "undefined") {
+	    hidden = "webkitHidden";
+	    visibilityChange = "webkitvisibilitychange";
+	}
+
+	APP.hidden = false;
+
+	document.addEventListener(visibilityChange, handleVisibilityChange, false);
+
+	function handleVisibilityChange() {
+	   if(document[hidden]){
+	   		APP.hidden = true;
+	   		APP.muteAll(true);
+	   		
+	   }
+
+	    if(!document[hidden]){
+	    	APP.hidden = false;
+	    	if(APP.soundOn){
+	   			APP.unMuteAll(true);
+	   		}
+	   }
+
+	}
+
+
+
+	
+
+	$(".footer-sound").click(function(e){
+		APP.sounds['click'].play();
+		//_this.audio.playFromTo("click",0,1);
+		if (APP.soundOn) {
+	    	$(".footer-sound .sbar").addClass("noAnim");
+	   		APP.soundOn = false;
+	   		APP.muteAll();
+	   		// udpate cookie
+	   		setCookie("muted",1);
+	  	} else {
+	    	$(".footer-sound .sbar").removeClass("noAnim");
+	    	APP.soundOn = true;
+	    	APP.unMuteAll();
+	    	setCookie("muted",0);
+	  	}
+		
+	});
+	
+
+	// to help with needing click to start audio
+	$("body").click(function(){
+		//APP.sounds["click"].play();
+	});
+
+	$(".background").click(function(){
+		//APP.sounds["click"].play();
+	});
+
+	$("#webgl").click(function(){
+		//APP.sounds["click"].play();
+	});
+
+	APP.mouse = new THREE.Vector2(0,0);
+	if(!this.isMobile){
+		window.addEventListener("mousemove", mouseMove);
+	}
+
+	function mouseMove(e){
+		var x =  (e.clientX - window.innerWidth/2);
+  		var y = (e.clientY - window.innerHeight/2);
+  		APP.mouse.x = x;
+  		APP.mouse.y = y;
+  		//$(".background-video").css("transform","translate("+x+"px,"+y+"px)");
+	}
+
+	// reel close button
+	$('#reel .close').on('click', function() {
+		APP.sounds["click"].play();
+		APP.hideReel();
+	});
+
+
+	// lazy load
+	document.addEventListener("DOMContentLoaded", function() {
+	var lazyloadImages;    
+
+	  if ("IntersectionObserver" in window) {
+	    lazyloadImages = document.querySelectorAll(".lazy");
+	    var imageObserver = new IntersectionObserver(function(entries, observer) {
+	      entries.forEach(function(entry) {
+	        if (entry.isIntersecting) {
+	          var image = entry.target;
+	          image.src = image.dataset.src;
+	          //image.classList.remove("lazy");
+	          imageObserver.unobserve(image);
+	        }
+	      });
+	    });
+
+	    lazyloadImages.forEach(function(image) {
+	      imageObserver.observe(image);
+	    });
+	  } else {  
+	    var lazyloadThrottleTimeout;
+	    lazyloadImages = document.querySelectorAll(".lazy");
+	    
+	    function lazyload () {
+	      if(lazyloadThrottleTimeout) {
+	        clearTimeout(lazyloadThrottleTimeout);
+	      }    
+
+	      lazyloadThrottleTimeout = setTimeout(function() {
+	        var scrollTop = window.pageYOffset;
+	        lazyloadImages.forEach(function(img) {
+	            if(img.offsetTop < (window.innerHeight + scrollTop)) {
+	              img.src = img.dataset.src;
+	              img.classList.remove('lazy');
+	            }
+	        });
+	        if(lazyloadImages.length == 0) { 
+	          document.removeEventListener("scroll", lazyload);
+	          window.removeEventListener("resize", lazyload);
+	          window.removeEventListener("orientationChange", lazyload);
+	        }
+	      }, 20);
+	    }
+
+	    document.addEventListener("scroll", lazyload);
+	    window.addEventListener("resize", lazyload);
+	    window.addEventListener("orientationChange", lazyload);
+	  }
+	})
+
+
+	
 }	
-
-function bgChangeDemoOn() {
-	var bgColor = document.getElementById("bg-color"),
-		musicSec = document.getElementById("body-music"),
-		mainSec = document.getElementById("body-main"),
-		soundSec = document.getElementById("body-sound"),
-		demoSec = document.getElementById("body-demo"),
-		head = document.getElementById("header");
 	
-	bgColor.style.backgroundPosition = "bottom";
 
-	demoSec.style.zIndex = "200";
-	demoSec.style.opacity = "1";
-	musicSec.style.zIndex = "0";
-	musicSec.style.opacity = "0";
-	mainSec.style.zIndex = "0";
-	mainSec.style.opacity = "0";	
-	soundSec.style.zIndex = "0";
-	soundSec.style.opacity = "0";
-	head.style.opacity = "0";
+
+// global analytics event tracking
+APP.trackEvent = function(e){
+	console.log("Event Tracked", e);
+	dataLayer.push(e);
 }
 
-function bgChangeDemoOff() {
-	var bgColor = document.getElementById("bg-color"),
-		musicSec = document.getElementById("body-music"),
-		mainSec = document.getElementById("body-main"),
-		soundSec = document.getElementById("body-sound"),
-		head = document.getElementById("header"),
-		demoSec = document.getElementById("body-demo");
-	
-	bgColor.style.backgroundPosition = "bottom";
-
-	demoSec.style.zIndex = "-1";
-	demoSec.style.opacity = "0";
-	musicSec.style.zIndex = "0";
-	musicSec.style.opacity = "0";
-	mainSec.style.zIndex = "1";
-	mainSec.style.opacity = "1";	
-	soundSec.style.zIndex = "0";
-	soundSec.style.opacity = "0";
-	head.style.opacity = "1";
+/*
+// handle resizing of browser 
+window.addEventListener( 'resize', onWindowResize, false );
+function onWindowResize() {
+	// handle non webGL specific resizing
+	if(app.currentTip){
+		app.toolTip.show(app.state,app.currentTip);
+	}
 }
 
-$(document).scroll(function() {
-	if($(this).scrollTop() >= 20){
-		$('#btn-top').fadeIn(200);
+*/
+
+
+// listen for user changing states with back and next buttons
+window.onpopstate = function(event) {
+	//alert(event.state);
+ 	var state = (event.state);
+  	if(!state) { state = "home";}
+    if(state=="/") { state = "home"; }
+    APP.go(state, false);
+};
+
+
+APP.showReel = function(){
+	$("#reel").addClass("show");
+	APP.webGL.paused = true;
+	APP.muteAll(true);
+
+	$.each(APP.videoPlayers,function(i,p){
+		if( p.showreel ){ p.play(); } else { p.pause(); }
+	});
+	_this.canvas.removeEventListener('mousedown', APP.webGL.onMouseDownLanding, false);
+
+}
+
+
+APP.hideReel = function(){
+	$("#reel").removeClass("show");
+	$.each(APP.videoPlayers,function(i,p){
+		if( p.showreel ){ p.pause(); }
+	});
+	APP.webGL.paused = false;
+	if(APP.soundOn){
+		APP.unMuteAll();
 	}
-	else {
-		$('#btn-top').fadeOut(200);
+	_this.canvas.addEventListener('mousedown', APP.webGL.onMouseDownLanding, false);
+}
+
+
+
+
+APP.videos = {
+	init: function(){
+		APP.videoPlayers=[];
+		
+		// vimeo videos //
+		// add a player for eaah vimeo video
+		// add speical handlers for REEL as well in here
+		var m = APP.data.reel;
+		c="<div data-id='"+m.id+"' data-showreel=true data-autoplay=false class='player vimeo' id='player_"+m.id+"''></div>";
+		$("#reel .reel-video").html(c);
+
+		$.each($(".vimeo"),function(i,e){
+         	var id = $(e).attr("data-id");
+         	var autoplay = $(e).attr("data-autoplay");
+         	var showreel = $(e).attr("data-showreel");
+		    var options = {
+		        id: id,
+		        height: '349',
+		        width: '560',
+		        loop: false,
+		        autoplay:autoplay,
+		        byline:false,
+		        color:'ffff5d',
+		        title:false
+		    };
+
+		    var player = new Vimeo.Player('player_'+id, options);
+
+		    player.setVolume(1);
+
+		    player.on('play', function() {
+		        console.log('video played');
+		        APP.muteAll(true);
+		    });
+
+		    player.on('pause', function() {
+		        console.log('video paused!');
+		        if(APP.soundOn && !APP.hidden){
+		   			APP.unMuteAll();
+		   		}
+		    });
+
+		    player.on('stop', function() {
+		        console.log('video stopped');
+		        if(APP.soundOn && !APP.hidden){
+		   			APP.unMuteAll();
+		   		}
+		    });
+
+		    player.on('loaded', function() {
+		        console.log('video is ready and loaded');
+		    });
+
+		    if(showreel) { player.showreel = true;} else { player.showreel=false; }
+		    
+      		APP.videoPlayers.push(player);
+	     });
+
+
 	}
-});
 
-$(document).ready(function(){
-  $("a").on('click', function(event) {
-    if (this.hash !== "") {
-		event.preventDefault();
 
-		var hash = this.hash;
-		var parent = "#" + $(hash).parent().attr('id');
 
-		$("html, body").animate({
-			scrollTop: $(parent).scrollTop() + $(hash).offset().top}, 800);
+	
+
+
+}
+
+
+
+
+
+// router, manage state  //
+APP.go = function(state, storeHistory){
+	if(this.state==state) { return false; }
+	console.log("Change state requested. From " + this.state + " to " + state);
+
+	// get section and page
+	var path = state.split( '/' );
+	if(path[0]){ var section  = path[0]; }
+	if(path[1]){ var page = path[1]; }
+
+	var fromPath = this.state.split( '/' );
+	if(fromPath[0]){ var fromSection  = fromPath[0]; }
+	if(fromPath[1]){ var fromPage = fromPath[1]; }
+
+	// dynamic url is same level unless coming from deeper link
+	// then up a level
+	p = "./";
+	if(fromPage){ p = "../";}
+
+	if( section ) { 
+		console.log("section",section);
 	}
-   });
-});
 
-$(function(){
-	$("#btn-demo").load("DemoReel.html");
-});
+	if( page ){
+		console.log("page",page);
+	}
+
+	console.log(p);
+
+	// close the menu if open
+	APP.menu.hide();
+
+
+
+	// handle leaving old state
+	switch(fromSection){
+		case "home":
+			APP.home.hide();
+			break;
+
+		case "sound-design":
+			if(fromPage){
+				APP.soundDesignDetail.hide();
+			} else {
+				APP.soundDesign.hide();
+			}
+			break;
+
+		case "music":
+			if(fromPage){
+				APP.musicDetail.hide();
+			} else {
+				APP.music.hide();
+			}
+			break;
+
+
+		case "demo-reel":
+			if(fromPage){
+				APP.demoReelDetail.hide();
+			} else {
+				APP.demoReel.hide();
+			}
+			break;
+
+		case "about":
+			if(fromPage){
+				APP.aboutDetail.hide();
+			} else {
+				APP.about.hide();
+			}
+			break;
+
+		case "contact":
+			APP.contact.hide();
+			break;
+
+	}
+
+
+	// handle entering new state
+	switch(section){
+		case "home":
+			var title = APP.data.home.title;
+			document.title = APP.data.home["page-title"];
+			if(storeHistory) { history.pushState(state, title, p); }
+			APP.state = state;
+			APP.webGL.go("home");
+			APP.home.show();
+			break;
+
+		case "sound-design":
+			if( page ){
+				// sound design detail
+				APP.loader.update(.0);
+				APP.loader.show();
+				$.get("data/" + section + "/" + page + ".json", function(data){
+					setTimeout(function(){APP.soundDesignDetail.load(data);},800);
+					if(storeHistory) { history.pushState(state, title, p + state); }
+					APP.state = state;
+					document.title = data['page-title'];
+					APP.webGL.go("soundDesignDetail");
+					setTimeout(function(){APP.loader.update(.7);},500);
+					setTimeout(function(){APP.soundDesignDetail.show(); APP.loader.update(1.0); APP.loader.hide()},1000);
+				});
+
+			} else {
+				// sound design index
+				var title = APP.data.soundDesign.title;
+				document.title = APP.data.soundDesign["page-title"];
+				setTimeout(function(){APP.soundDesign.show();},0);
+				APP.webGL.go("soundDesign");
+				if(storeHistory) { history.pushState(state, title, p + state); }
+				APP.state = state;
+			}
+			break;
+
+		case "about":
+			if( page ){
+				// press  detail
+				APP.loader.update(.0);
+				APP.loader.show();
+				$.get("data/" + section + "/" + page + ".json", function(data){
+					setTimeout(function(){APP.pressDetail.load(data);},800);
+					if(storeHistory) { history.pushState(state, title, p + state); }
+					APP.state = state;
+					document.title = data['page-title'];
+					APP.webGL.go("pressDetail");
+					setTimeout(function(){APP.loader.update(.7);},500);
+					setTimeout(function(){APP.pressDetail.show(); APP.loader.update(1.0); APP.loader.hide()},1000);
+				});
+
+			} else {
+				// art index
+				var title = APP.data.about.title;
+				document.title = APP.data.about["page-title"];
+				setTimeout(function(){APP.about.show();},0);
+				APP.webGL.go("about");
+				if(storeHistory) { history.pushState(state, title, p + state); }
+				APP.state = state;
+			}
+			
+			break;
+
+		case "demo-reel":
+			if( page ){
+				// art detail
+				APP.loader.update(.0);
+				APP.loader.show();
+				$.get("data/" + section + "/" + page + ".json", function(data){
+					setTimeout(function(){APP.artDetail.load(data);},800);
+					if(storeHistory) { history.pushState(state, title, p + state); }
+					APP.state = state;
+					document.title = data['page-title'];
+					APP.webGL.go("artDetail");
+					setTimeout(function(){APP.loader.update(.7);},500);
+					setTimeout(function(){APP.artDetail.show(); APP.loader.update(1.0); APP.loader.hide()},1000);
+				});
+
+			} else {
+				// demoReel index
+				var title = APP.data.demoReel.title;
+				document.title = APP.data.demoReel["page-title"];
+				setTimeout(function(){APP.demoReel.show();},0);
+				APP.webGL.go("demoReel");
+				if(storeHistory) { history.pushState(state, title, p + state); }
+				APP.state = state;
+			}
+			
+			break;
+
+
+		case "music":
+			if( page ){
+				// prototype detail
+				APP.loader.update(.0);
+				APP.loader.show();
+				$.get("data/" + section + "/" + page + ".json", function(data){
+					setTimeout(function(){APP.musicDetail.load(data);},800);
+					if(storeHistory) { history.pushState(state, title, p + state); }
+					APP.state = state;
+					document.title = data['page-title'];
+					APP.webGL.go("musicDetail");
+					setTimeout(function(){APP.loader.update(.7);},500);
+					setTimeout(function(){APP.musicDetail.show(); APP.loader.update(1.0); APP.loader.hide()},1000);
+				});
+
+			} else {
+				// sound design index
+				var title = APP.data.music.title;
+				document.title = APP.data.music["page-title"];
+				setTimeout(function(){APP.music.show();},0);
+				APP.webGL.go("music");
+				if(storeHistory) { history.pushState(state, title, p + state); }
+				APP.state = state;
+			}
+			break;
+
+
+		case "contact":
+
+			var title = APP.data.contact.title;
+			document.title = APP.data.contact["page-title"];
+			setTimeout(function(){APP.contact.show();},0);
+			APP.webGL.go("contact");
+			if(storeHistory) { history.pushState(state, title, p + state); }
+			APP.state = state;
+			break;
+			
+	}
+
+	// update loaded icon default image
+	if(state=="home"){
+		setTimeout(function(){
+			$(".top-bar").removeClass("hide");
+			$(".bottom-bar").removeClass("hide");
+			$(".top-bar").addClass("bar");
+			$(".bottom-bar").addClass("bar");
+			$(".header").removeClass("show");
+			$(".footer-menu").addClass("show");
+		},500)
+
+	} else {
+		setTimeout(function(){
+			$(".top-bar").removeClass("bar");
+			$(".bottom-bar").removeClass("bar");
+			$(".top-bar").addClass("hide");
+			$(".bottom-bar").addClass("hide");
+			$(".header").addClass("show");
+			$(".footer-menu").removeClass("show");
+		},500)
+	}
+
+	// hide / show anything globally here
+	
+	setTimeout(function(){
+		//$('html,body').animate({ scrollTop: 100 },0);
+		$('html,body').animate({ scrollTop: 0 },1000);
+	},50);
+
+
+	
+}
+
+
+
