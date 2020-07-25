@@ -259,7 +259,7 @@ body {  color:#fff; overflow-x:hidden;}
 .header.shade { background: rgba(0,0,0,1); }
 .logo { cursor:pointer; position: absolute; top:5vh; left:5vw; z-index: 100; transform:rotate(0deg) ; width:50px; transition: all 2s ease-in-out; transform-origin: 0% 50%;}
 
-.header-title { position: absolute; top:2.5vw; left:70%; font-size:11px; font-family: expressway; color:#fff; width:12vw; text-transform: uppercase; }
+.header-title { position: absolute; top:2.5vw; left:70%; font-size:11px; font-family: 'expressway'; color:#fff; width:12vw; text-transform: uppercase; }
 
 /* end header */
 
@@ -318,7 +318,7 @@ font-size:9vw; line-height:10vh; text-transform: uppercase; color: white;
 .page.show { z-index:100; opacity:1;  transform: translate3d(0,0,0); }
 .page.hide { display: none; }
 
-.page-title {  user-select: none; white-space: nowrap; position:absolute; top:12vh; font-size:28vh; font-family: expressway; color:#fff; text-transform: uppercase;  margin:0; pointer-events: none; margin: 0 auto; width:100vw; text-align:center; color:rgba(255,255,255,.1); letter-spacing: 2vh; font-weight: 100; }
+.page-title {  user-select: none; white-space: nowrap; position:absolute; top:12vh; font-size:28vh; font-family: 'expressway'; color:#fff; text-transform: uppercase;  margin:0; pointer-events: none; margin: 0 auto; width:100vw; text-align:center; color:rgba(255,255,255,.1); letter-spacing: 2vh; font-weight: 100; }
 .page-subtitle { user-select: none; position:relative; white-space: nowrap; pointer-events: none;top:29vh; margin: 0 auto; color:rgba(255,255,255,.90); text-transform: uppercase; letter-spacing: 0.7vw; text-shadow: 0 1px 3px #82719c; font-size: .9vw; text-align: center; }
 
 .page-content { pointer-events: none;  color:white; text-transform: uppercase; letter-spacing: 2px; font-size: 12px; margin-top:15px;max-width:80%; margin-left: auto; margin-right:auto; opacity:.8; text-align: center; display: none;}
@@ -375,7 +375,7 @@ font-size:9vw; line-height:10vh; text-transform: uppercase; color: white;
   text-transform: uppercase;
   letter-spacing: 1px;
   transition: .1s all;
-  font-size:1.4vw; font-family: expressway;
+  font-size:1.4vw; font-family: 'expressway';
   
 
 }
@@ -385,7 +385,7 @@ font-size:9vw; line-height:10vh; text-transform: uppercase; color: white;
   text-transform: uppercase;
   margin-bottom:.5vw;
   transition: .1s all;
-  font-size:1vw; font-family: expressway;
+  font-size:1vw; font-family: 'expressway';
   
 
 }
@@ -1208,7 +1208,7 @@ transition: all 0.3s ease 0s;
   text-transform: uppercase;
   letter-spacing: 1px;
   transition: .1s all;
-  font-size:16px; font-family: expressway;
+  font-size:16px; font-family: 'expressway';
   
 
 }
@@ -1218,7 +1218,7 @@ transition: all 0.3s ease 0s;
   text-transform: uppercase;
 margin-bottom:5px;
   transition: .1s all;
-  font-size:10px; font-family: expressway;
+  font-size:10px; font-family: 'expressway';
   
 
 }
