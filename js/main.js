@@ -33,7 +33,7 @@ APP.init = function(){
     // section and page is pushed to page
 	if(window.section) { state = window.section; }
 	if(window.page) { state+= "/" + window.page;}
-	if(!window.section) { state = "home"; }
+	if (!window.section) { state = "home"; }
 
 
 	// check if all preloaded and ready to go

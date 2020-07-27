@@ -27,7 +27,7 @@ APP.header = {
 
 		$(".logo").click(function(){
 			APP.sounds["click"].play();
-			APP.go("home", true);
+			APP.go("home", false);
 		});
 
 
@@ -66,7 +66,7 @@ APP.footer = {
 
 		/*
 		$(".loaded-icon").click(function(){
-			APP.go("home", true);
+			APP.go("home", false);
 		});
 		*/
 	},
@@ -112,10 +112,10 @@ APP.menu = {
 			var link = $(this).attr("data-link");
 			console.log("menu-item clicked : " + link);
 			if(link=="demo-reel"){
-				APP.go("home", true);
+				APP.go("home", false);
 				APP.showReel();
 			} else {
-				APP.go(link, true);
+				APP.go(link, false);
 			}
 			
 		});
@@ -244,7 +244,7 @@ APP.soundDesign = {
 			APP.sounds["click"].play();
 			var link = $(this).attr("data-link");
 			console.log("work-item clicked : " + link);
-			APP.go(link, true);
+			APP.go(link, false);
 		});
 	},
 	show : function(dir){
@@ -302,7 +302,7 @@ APP.music = {
 			APP.sounds["click"].play();
 			var link = $(this).attr("data-link");
 			console.log("music-item clicked : " + link);
-			APP.go(link, true);
+			APP.go(link, false);
 		});
 	},
 	show: function (dir) {
@@ -355,7 +355,7 @@ APP.demoReel = {
 		$(".demo-reel .demo-reel-item").click(function () {
 			var link = $(this).attr("data-link");
 			console.log("demo-reel-item clicked : " + link);
-			APP.go(link, true);
+			APP.go(link, false);
 		});
 
 	},
@@ -446,7 +446,7 @@ APP.about = {
 			if(link.includes("http")){
 				window.open(link, '_blank');
 			} else {
-				APP.go(link, true);
+				APP.go(link, false);
 			}
 			
 		});
