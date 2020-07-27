@@ -388,7 +388,7 @@ APP.about = {
 		$(".about .page-title").html(data.title);		
 		$(".about .page-subtitle").html(data.subtitle);
 		$(".about .page-content").html(data.content);
-		$(".about .feature-bio").html(data.bio);
+		$(".about .feature-bio").html(data.bio + data.skills);
 
 		// feature media
 
@@ -399,15 +399,10 @@ APP.about = {
 				break;
 
 			case "image":
-				str = "<img class='feature-image nine-sixteen' id='feature-image' src='" + data.feature.images[0].file + "' />";
-				$(".about .feature-content").html(str);
+				str = "<img class='nine-sixteen' id='feature-image' src='" + data.feature.images[0].file + "' />";
+				$(".about .feature-image").html(str);
 				break;
 		}
-
-		$(".feature-bio").html("TEST");
-
-		
-
 
 		//iterate the contact and build list
 		var l = "", a = 0;

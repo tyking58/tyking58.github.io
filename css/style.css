@@ -53,13 +53,11 @@ body {  color:#fff; overflow-x:hidden;}
   width: 85vw;
   height: 48vw;
   margin-left:7.5vw;
-
 }
 
 .nine-sixteen {
-    width: 48vw;
-    height: 85vw;
-    margin-left: 7.5vw;
+    max-width: 700px;
+    width: 75%;
 }
 
 /* common */
@@ -101,7 +99,7 @@ body {  color:#fff; overflow-x:hidden;}
 
 
 
-.feature {   margin-top:30vw; }
+.feature {   margin-top:20vw; }
 .feature  img {    object-fit: cover;
   object-position: center center; filter:grayscale(30%); }
 
@@ -633,6 +631,34 @@ font-size:9vw; line-height:10vh; text-transform: uppercase; color: white;
   -moz-transform: rotateY(20deg);
   -webkit-transform: perspective(100) rotateY(20deg);
   transition: .3s ease-in-out all;
+}
+
+.about .feature-content {
+    display: flex;
+    padding: 5vw;
+}
+
+.about .feature-image {
+    width: 50%;
+    max-width: 700px;
+    display: flex;
+    justify-content: center;
+}
+
+.about .feature-bio {
+    width: 50%;
+    font-size: 1.8em;
+    padding: 0 2vw;
+}
+
+.about .feature-skills {
+    width: 50%;
+    font-size: 1.8em;
+    padding: 0 2vw;
+}
+
+.about p {
+    opacity: 0.7;
 }
 
 
@@ -1633,43 +1659,47 @@ margin-bottom:5px;
 
 
 @media only screen and ( max-width: 1080px){
-  .section-title { 
-    letter-spacing: .5vw;
-    font-size: 1.2vw;
-  }
-
-  .page-subtitle { 
-    font-size: 1.2vw;
-  }
-
- .sound-design-detail .client, .sound-design-detail .role { 
-    font-size: 1.2vw;
-  }
-
-
-  .sound-design-detail .page-title { 
-    top:30vh;
-  }
-
-  .sound-design-detail .page-subtitle { 
-    top:25vh;
-  }
-
-  .sound-design-detail .awards-list .list-item {    
-    font-size: .9vw;
+    .feature {
+        margin-top: 30vw;
+    }
     
-  }
-
-
-  .about-detail.page-title { 
-    top:30vh;
-  }
-
- .about-detail .page-subtitle { 
-    top:25vh;
-  }
-
-  .about-detail .content { font-size:1.4vw; }
+    .section-title { 
+      letter-spacing: .5vw;
+      font-size: 1.2vw;
+    }
+    
+    .page-subtitle { 
+      font-size: 1.2vw;
+    }
+    
+    sound-design-detail .client, .sound-design-detail .role { 
+      font-size: 1.2vw;
+    }
+    
+    
+    .sound-design-detail .page-title { 
+      top:30vh;
+    }
+    
+    .sound-design-detail .page-subtitle { 
+      top:25vh;
+    }
+    
+    .sound-design-detail .awards-list .list-item {    
+      font-size: .9vw;
+      
+    }
+    
+    
+    .about-detail.page-title { 
+      top:30vh;
+    }
+    
+    about-detail .page-subtitle { 
+      top:25vh;
+    }
+    
+    .about-detail .content { font-size:1.4vw; }
 
   
 }
@@ -1779,6 +1809,10 @@ margin-bottom:5px;
   -webkit-transform: perspective(100) rotateY(20deg);
   transition: .3s ease-in-out all;
 }
+
+.about .feature-content { display: flex; padding: 5vw; flex-direction: column;}
+
+.about .feature-bio, .about .feature-image, .about .feature-skills {width: 100%; padding: 5vw 0;}
 
 .section-title { margin-top:5vh; margin-bottom: 3vh; font-size: 2vw; }
 
@@ -1976,7 +2010,9 @@ margin-bottom:5px;
 }
 
 
-
+@media only screen and (max-width: 501px) {
+    .about .feature {margin-top: 50vw;}
+}
 
 
 
