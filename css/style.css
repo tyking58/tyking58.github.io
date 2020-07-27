@@ -56,6 +56,12 @@ body {  color:#fff; overflow-x:hidden;}
 
 }
 
+.nine-sixteen {
+    width: 48vw;
+    height: 85vw;
+    margin-left: 7.5vw;
+}
+
 /* common */
 
 .top-section {

@@ -383,11 +383,31 @@ APP.about = {
 	_this : this,
 	init : function(){
 		var data = APP.data.about;
-		var list = data.list;
+		var picture = data.picture;
 		
 		$(".about .page-title").html(data.title);		
 		$(".about .page-subtitle").html(data.subtitle);
 		$(".about .page-content").html(data.content);
+		$(".about .feature-bio").html(data.bio);
+
+		// feature media
+
+		switch (data.feature.type) {
+			case "iframe":
+				str = "<iframe class='feature-iframe sixteen-nine' id='feature-iframe' src='" + data.feature.iframe + "' ></iframe>";
+				$(".work-detail .feature-content").html(str);
+				break;
+
+			case "image":
+				str = "<img class='feature-image nine-sixteen' id='feature-image' src='" + data.feature.images[0].file + "' />";
+				$(".about .feature-content").html(str);
+				break;
+		}
+
+		$(".feature-bio").html("TEST");
+
+		
+
 
 		//iterate the contact and build list
 		var l = "", a = 0;
@@ -407,7 +427,7 @@ APP.about = {
 
 
 		// update page
-		$(".about .about-title").html("[ features | tutorials | articles ]");
+		$(".about .about-title").html("[ life | skills | interests ]");
 		$(".about .list").html(l);
 
 		//iterate the interviews and build list
@@ -419,7 +439,7 @@ APP.about = {
 		});
 
 		// update page
-		$(".about .interviews-title").html("[ interviews | speaking | features ]");
+		$(".about .interviews-title").html("[ life | skills | interests ]");
 		$(".about .interviews-list").html(l);
 
 
@@ -1013,8 +1033,6 @@ APP.soundDesignDetail = {
 }
 
 
-
-
 APP.demoReelDetail = { 
 	_this : this,
 	init : function(){
@@ -1320,9 +1338,6 @@ APP.demoReelDetail = {
 }
 
 
-
-
-
 APP.aboutDetail = { 
 	_this : this,
 	init : function(){
@@ -1624,9 +1639,6 @@ APP.aboutDetail = {
     	}
 	}
 }
-
-
-
 
 
 APP.musicDetail = { 
@@ -1983,7 +1995,6 @@ APP.musicDetail = {
     	}
 	}
 }
-
 
 
 APP.showPage = function(page){
