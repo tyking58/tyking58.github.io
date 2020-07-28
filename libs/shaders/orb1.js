@@ -195,15 +195,18 @@ void main() {
     rd_cs = vec3(-rd.y, rd.x, rd.z);
     rd_cb = vec3(-rd.y, rd.x, rd.z);
 
-    R(rd_co.xz, visible * 5.0);
-    R(ro_co.xz, visible * 5.0);
-    R(ro_co.yz, visible * 5.0);
-    R(rd_co.yz, visible * 5.0);
+    if (visible != 0.0) {
 
-    R(rd_co.xz, 0.05 * iTime);
-    R(ro_co.xz, 0.05 * iTime);
-    R(rd_co.yz, 0.05 * iTime);
-    R(ro_co.yz, 0.05 * iTime);
+        R(rd_co.xz, visible * 5.0);
+        R(ro_co.xz, visible * 5.0);
+        R(ro_co.yz, visible * 5.0);
+        R(rd_co.yz, visible * 5.0);
+
+        R(rd_co.xz, 0.05 * iTime);
+        R(ro_co.xz, 0.05 * iTime);
+        R(rd_co.yz, 0.05 * iTime);
+        R(ro_co.yz, 0.05 * iTime);
+    }
 
     //R(rd_cb.xz, 0.3);
     //R(ro_cb.xz, 0.3);
@@ -215,10 +218,12 @@ void main() {
 
     //Sine Wave Scale
     //float scale = 20.0;
-    float scale = (mix(1.5, 24.0 * (orbOpacity * orbOpacity), Sin01(0.3 * iTime * (.1)))) * visible * centerOpacity;
+    float scale = (mix(1.5, 12.0 * (orbOpacity * orbOpacity), Sin01(0.3 * iTime * (.1)))) * visible * centerOpacity;
     float scale2 = mix(1.5,2.0,Sin01(0.5 * iTime*(.2)));
 
-    for (int i = 0; i < 80; i++) {
+    for (int i = 0; i < 50; i++) {
+
+        float d = 0.0;
 
         //vec3 p = ro * t + rd; // //(orbOpacity) is more solid lines
         //vec3 p = ro + t * rd; // //(orbOpacity) is more solid lines
@@ -245,21 +250,40 @@ void main() {
         float dt2 = d3 + d4;
         float dt3 = d6 + d5;
 
-        float cy_union_01 = opUnion(dt2, dt3);
-        float cy_union_02 = opUnion(cy_union_01, dt1);
-        float sph_oct_subtract = opSmoothSubtraction(d10, d9, 0.1);
-        float sph_cy_subtract = opSubtraction(d12, cy_union_02);
-        float subtract_union = opUnion(sph_oct_subtract, sph_cy_subtract);
+        if (visible != 0.0 && visible != 1.0) {
 
-        float d = subtract_union; 
+            float cy_union_01 = opUnion(dt2, dt3);
+            float cy_union_02 = opUnion(cy_union_01, dt1);
+            float sph_oct_subtract = opSmoothSubtraction(d10, d9, 0.1);
+            float sph_cy_subtract = opSubtraction(d12, cy_union_02);
+            float subtract_union = opUnion(sph_oct_subtract, sph_cy_subtract);
+
+            d = subtract_union;
+
+        }
+
+        else if (visible == 0.0) {
+            float cy_union_01 = opUnion(dt2, dt3);
+            float cy_union_02 = opUnion(cy_union_01, dt1);
+
+            d = cy_union_02;
+        }
+
+        else {
+            float sph_oct_subtract = opSmoothSubtraction(d10, d9, 0.1);
+            //float sph_cy_subtract = opSubtraction(d12, cy_union_02);
+            //float subtract_union = opUnion(sph_oct_subtract, sph_cy_subtract);
+
+            d = sph_oct_subtract;
+        }
         
-        if (d < 0.00005) {
+        if (d < 0.0005) {
             break;
         }
 
-        t += 0.8 * d;
+        t += 0.9 * d;
 
-        gl_FragColor.rgb += (0.020 * GetColor(p_co)) * orbOpacity;
+        gl_FragColor.rgb += (0.030 * GetColor(p_co)) * orbOpacity;
         //gl_FragColor.rgb += (0.06 * GetColor(p) * (audio1 * .6)) * orbOpacity;
 
         //Controls the red color when mouse is close to center
